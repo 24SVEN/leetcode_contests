@@ -1,4 +1,6 @@
 import math
+
+
 class Solution:
     def minimumTime(self, time, totalTrips: int) -> int:
         dp = totalTrips * [0]
@@ -24,6 +26,7 @@ class Solution:
 
 
 
+
 test = Solution()
 # print(test.minimumTime([1,2,3],5))
 #3
@@ -31,3 +34,5 @@ test = Solution()
 # #2
 
 print(test.minimumTime([9,3,10,5],2))
+
+#getting timeout error
