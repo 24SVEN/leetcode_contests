@@ -1,4 +1,5 @@
-#attempt to include dp
+#https://leetcode.com/problems/minimum-time-to-complete-trips/
+#attempt to use dp
 import math
 
 class Solution:
