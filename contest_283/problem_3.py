@@ -7,45 +7,36 @@ class TreeNode:
 class Solution:
     def createBinaryTree(self, descriptions):
 
-        head_root = TreeNode(descriptions[0][0])
-        cursor_root = TreeNode(descriptions[0][0])
 
-        storage = {}
+        #Great solution and easy to understand.
+        #https://leetcode.com/problems/create-binary-tree-from-descriptions/discuss/1823678/Python-Solution-using-HashMap-with-Steps
+
+
+        #keys are node values while value is list of [tree node, has_parent]
+        hash_map = {}
 
         for li in descriptions:
+            parent_val = li[0]
+            child_val = li[1]
+            isLeft = li[2]
 
-            parent = li[0]
-            child = li[1]
+            if hash_map.get(parent_val,None) is None:
+                hash_map[parent_val] = [TreeNode(parent_val),False]
+            if hash_map.get(child_val,None) is None:
+                hash_map[child_val] = [TreeNode(child_val),False]
+            hash_map[child_val][1] = True
 
-            #if parent node doesn't exist, create it
-            if cursor_root.val != parent and parent not in storage.keys():
-                storage[cursor_root.val] = cursor_root
-                cursor_root = TreeNode(parent)
-                print('created node' + str(parent))
-            
-            #left child
-            if li[2] == 1:
-                if child in storage.keys():
-                    cursor_root.left = storage[child]
-                else:
-                    if parent not in storage.keys():
-                        storage[cursor_root.val] = cursor_root
-                    cursor_root.left = TreeNode(li[1])
-                    print('created node' + str(li[1]))
-            #right child
-            if li[2] == 0:
-                if child in storage.keys():
-                    cursor_root.right = storage[child]
-                else:
-                    if parent not in storage.keys():
-                        storage[cursor_root.val] = cursor_root
-                    cursor_root.right = TreeNode(li[1])
-                    print('created node' + str(li[1]))
-                if cursor_root.val > head_root.val:
-                    head_root = cursor_root
-                    
+            if isLeft:
+                hash_map[parent_val][0].left = hash_map[child_val][0]
+            else:
+                hash_map[parent_val][0].right = hash_map[child_val][0]
 
-        return head_root
+        
+        for key,val in hash_map.items():
+            if val[1] is False:
+                return val[0] 
+
+        return None
 
 
 
