@@ -5,29 +5,31 @@ class TreeNode:
         self.left = left
         self.right = right
 class Solution:
+    def __init__(self):
+        self.result = 0
     def averageOfSubtree(self, root) -> int:
-
-        result = 0
+        #
+        #result = 0
         sum_count = [0,0]
 
-        self.dfs(root,sum_count,result)
-        return result
+        self.dfs(root,sum_count)
+        return self.result
         
 
-    def dfs(self,root,sum_count,result):
+    def dfs(self,root,sum_count):
         if not root:
             return (0,0)
         
-
-        left_total = self.dfs(root.left,sum_count,result)
-        right_total = self.dfs(root.right,sum_count,result)
+        CURRENT_ROOT = root.val
+        left_total = self.dfs(root.left,sum_count)
+        right_total = self.dfs(root.right,sum_count)
 
         total = left_total[0] + right_total[0] + root.val
         count = left_total[1] + right_total[1] + 1
 
         total_average = total//count
         if root.val == total_average:
-            result += 1
+            self.result += 1
         
         return (total,count)
         
